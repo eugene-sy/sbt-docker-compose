@@ -37,7 +37,7 @@ useGpg := true
 
 publishMavenStyle := true
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
@@ -62,9 +62,9 @@ pomExtra := {
     </developers>
   }
 
-scalariformSettings
+import scalariform.formatter.preferences._
 
-releaseNextVersion := { (version: String) => Version(version).map(_.bumpBugfix.asSnapshot.string).getOrElse(versionFormatError) }
+//releaseNextVersion := { (version: String) => Version(version).map(_.bumpBugfix.asSnapshot.string).getOrElse(versionFormatError) }
 
 releaseProcess := Seq(
   checkSnapshotDependencies,
