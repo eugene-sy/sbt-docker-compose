@@ -8,9 +8,9 @@ name := "sbt-docker-compose"
 
 organization := "com.tapad"
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.12.14"
 
-crossSbtVersions := Seq("0.13.16", "1.0.0")
+crossSbtVersions := Seq("1.5.0")
 
 libraryDependencies += {
   val liftJsonVersion = CrossVersion.partialVersion(scalaVersion.value) match {
