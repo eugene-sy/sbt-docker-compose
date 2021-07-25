@@ -21,9 +21,9 @@ libraryDependencies += {
 }
 
 libraryDependencies ++= Seq(
-  "org.yaml" % "snakeyaml" % "1.15",
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-  "org.mockito" % "mockito-all" % "1.9.5" % "test")
+  "org.yaml" % "snakeyaml" % "1.29",
+  "org.scalatest" %% "scalatest" % "3.2.9" % "test",
+  "org.mockito" % "mockito-all" % "1.10.19" % "test")
 
 publishTo := {
   val nexus = "https://oss.sonatype.org"
