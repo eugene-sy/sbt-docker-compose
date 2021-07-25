@@ -1,5 +1,5 @@
 import com.tapad.docker.DockerComposeKeys._
-import com.tapad.docker.{ RunningInstanceInfo, DockerComposePluginLocal }
+import com.tapad.docker.{ DockerComposePluginLocal, RunningInstanceInfo }
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 
@@ -19,6 +19,7 @@ trait MockHelpers {
 
   /**
    * Stubs out calls to Docker so that they don't actually call any Docker commands
+   *
    * @param composeMock Mock instance of the Plugin
    */
   def mockDockerCommandCalls(composeMock: DockerComposePluginLocal): Unit = {

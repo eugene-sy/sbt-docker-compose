@@ -10,20 +10,14 @@ organization := "com.tapad"
 
 scalaVersion := "2.12.14"
 
-crossSbtVersions := Seq("1.5.0")
-
-libraryDependencies += {
-  val liftJsonVersion = CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, n)) if n < 12 => "2.5.4"
-    case _ => "3.0.1"
-  }
-  "net.liftweb" %% "lift-json" % liftJsonVersion
-}
+crossSbtVersions := Seq("1.0.0")
 
 libraryDependencies ++= Seq(
+  "net.liftweb" %% "lift-json" % "3.4.3",
   "org.yaml" % "snakeyaml" % "1.29",
-  "org.scalatest" %% "scalatest" % "3.2.9" % "test",
-  "org.mockito" % "mockito-all" % "1.10.19" % "test")
+  "org.scalatest" %% "scalatest" % "3.2.9" % Test,
+  "org.scalatestplus" %% "mockito-3-4" % "3.2.9.0" % Test,
+"org.mockito" % "mockito-all" % "1.10.19" % Test)
 
 publishTo := {
   val nexus = "https://oss.sonatype.org"

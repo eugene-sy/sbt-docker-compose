@@ -1,10 +1,12 @@
 package com.tapad.docker
 
 import com.tapad.docker.DockerComposeKeys._
+import net.liftweb.json.JsonAST.render
 import net.liftweb.json._
 import sbt._
 import sbt.complete.Parser
 import sbt.complete.DefaultParsers.{ parse => _, _ }
+
 import scala.Console._
 import scala.collection._
 import scala.concurrent.duration._
@@ -45,7 +47,7 @@ case class PortInfo(hostPort: String, containerPort: String, isDebug: Boolean)
  * @param containerHost The container Host (name or IP) of the running service
  */
 case class ServiceInfo(serviceName: String, imageName: String, imageSource: String, ports: List[PortInfo],
-    containerId: String = "", containerHost: String = "") extends ComposeCustomTagHelpers {
+  containerId: String = "", containerHost: String = "") extends ComposeCustomTagHelpers {
   val versionTag = getTagFromImage(imageName)
 }
 
@@ -531,8 +533,8 @@ class DockerComposePluginLocal extends AutoPlugin with ComposeFile with DockerCo
       //then attempt to use that. Otherwise, use the higher-level NetworkSettings Gateway setting
       val networkHost = json \ "NetworkSettings" \ "Networks" \ s"${instanceName}_$dockerMachineName" \ "Gateway"
       networkHost match {
-        case JNothing => compact(render(json \ "NetworkSettings" \ "Gateway")).replaceAll("\"", "")
-        case _ => compact(render(networkHost)).replaceAll("\"", "")
+        case JNothing => compactRender(json \ "NetworkSettings" \ "Gateway").replaceAll("\"", "")
+        case _ => compactRender(networkHost).replaceAll("\"", "")
       }
     }
   }
@@ -563,8 +565,7 @@ class DockerComposePluginLocal extends AutoPlugin with ComposeFile with DockerCo
     instanceName: String,
     serviceName: String,
     deadline: Deadline,
-    verbose: Boolean = true
-  ): Option[String] = deadline.hasTimeLeft match {
+    verbose: Boolean = true): Option[String] = deadline.hasTimeLeft match {
     case true => {
       if (verbose)
         print(s"Waiting for container Id to be available for service '$serviceName' time remaining: ${deadline.timeLeft.toSeconds}")
