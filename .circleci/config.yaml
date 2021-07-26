@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/samplescala
+    docker:
+      - image: openjdk:8
+
+    steps:
+      - checkout
+
+      - run: sbt compile exit
+
+      - run: sbt test exit
+
+      - store_test_results:
+          path: target/test-reports
