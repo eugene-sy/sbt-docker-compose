@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/sbt-docker-compose
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.sbt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: cat /dev/null | sbt compile test:compile
+
+      - run: cat /dev/null | sbt test
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies--{{ checksum "build.sbt" }}
+
+      - store_test_results:
+          path: target/test-reports
